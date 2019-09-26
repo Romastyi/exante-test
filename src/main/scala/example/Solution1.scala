@@ -21,23 +21,6 @@ import scala.annotation.tailrec
  */
 object Solution1 {
 
-  private case class Break(list: List[Int]) extends Throwable
-
-  // Последовательность полных квадратов от A до B
-  def squares(a: Int, b: Int): List[Int] = {
-
-    @tailrec
-    def inner(i: Int, prev: Int, acc: List[Int]): List[Int] = {
-      val next = prev + i
-      if (next > b) acc
-      else if (next >= a) inner(i + 2, next, acc:+ next)
-      else inner(i + 2, next, acc)
-    }
-
-    inner(3, 1, Nil)
-
-  }
-
   // Naive implementation
   @tailrec
   private def findMaxIntSqrtCount(n: Int, acc: Int = 0): Int = {
@@ -50,9 +33,18 @@ object Solution1 {
   }
 
   def solution(a: Int, b: Int): Int = {
-    squares(a, b).foldLeft(0) { case (acc, n) =>
-      findMaxIntSqrtCount(n) max acc
+
+    // Последовательность полных квадратов от A до B
+    @tailrec
+    def inner(i: Int, prev: Int, maxDepth: Int): Int = {
+      val next = prev + i
+      if (next > b) maxDepth
+      else if (next >= a) inner(i + 2, next, findMaxIntSqrtCount(next) max maxDepth)
+      else inner(i + 2, next, maxDepth)
     }
+
+    inner(3, 1, 0)
+
   }
 
 }
