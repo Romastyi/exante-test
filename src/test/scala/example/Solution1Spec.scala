@@ -12,7 +12,7 @@ class Solution1Spec extends FlatSpec with Matchers {
     Solution1.solution(6000, 7000) should be (3)
   }
 
-  it should "A = 2 и B = 1 000 000 000 => 3" in {
+  it should "A = 2 и B = 1 000 000 000 => 4" in {
     Solution1.solution(2, 1000000000) should be (4)
   }
 
